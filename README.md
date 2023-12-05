@@ -1,1 +1,1 @@
-# GPU_Project
+# Single GPU to Multi-GPU
