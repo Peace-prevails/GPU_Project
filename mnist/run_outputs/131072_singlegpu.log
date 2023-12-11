@@ -1,0 +1,11 @@
+[GPU0] Epoch 1 | Batchsize: 32 | Steps: 4096
+[GPU0] Epoch 2 | Batchsize: 32 | Steps: 4096
+[GPU0] Epoch 3 | Batchsize: 32 | Steps: 4096
+[GPU0] Epoch 4 | Batchsize: 32 | Steps: 4096
+[GPU0] Epoch 5 | Batchsize: 32 | Steps: 4096
+[GPU0] Epoch 6 | Batchsize: 32 | Steps: 4096
+[GPU0] Epoch 7 | Batchsize: 32 | Steps: 4096
+[GPU0] Epoch 8 | Batchsize: 32 | Steps: 4096
+[GPU0] Epoch 9 | Batchsize: 32 | Steps: 4096
+[GPU0] Epoch 10 | Batchsize: 32 | Steps: 4096
+total_epochs:10, train_time:113
