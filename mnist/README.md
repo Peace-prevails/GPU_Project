@@ -14,6 +14,8 @@ Single GPU and multiple GPUs were used to test performance data.
 
 * [datautils.py](datautils.py): Generate dataset class
 
+* [run_all.sh](run_all.sh): Test all diff dataset size for single & multi
+
 
 
 
