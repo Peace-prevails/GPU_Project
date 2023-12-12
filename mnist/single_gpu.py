@@ -29,9 +29,9 @@ class Trainer:
         self.save_every = save_every
 
     def _run_batch(self, source, targets):
-        # source, targets = source.to(device), targets.to(device)
-        self.optimizer.zero_grad()
         # profiler.start()
+        source, targets = source.to(self.gpu_id), targets.to(self.gpu_id)
+        self.optimizer.zero_grad()
         output = self.model(source)
         # profiler.stop()
         loss = F.nll_loss(output, targets)
