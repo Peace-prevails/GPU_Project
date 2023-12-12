@@ -14,7 +14,9 @@ Single GPU and multiple GPUs were used to test performance data.
 
 * [datautils.py](datautils.py): Generate dataset class
 
-* [run_all.sh](run_all.sh): Test all diff dataset size for single & multi
+* [run_app.sh](run_app.sh): Test all diff dataset size for single & multi, get the running time
+
+* [run_ncu.sh](run_ncu.sh): Use NCU test all diff dataset size for single GPU version, get FLOPs and DRAM
 
 
 
