@@ -20,6 +20,6 @@
 **Pytorch-MNIST**
 - Host: cuda3.cims.nyu.edu
 - CUDA Version `module load cuda-11.8`
-- execute
-  - [run_app.sh](minst/run_app.sh): Test all diff dataset size for single & multi, get the running time
-  - [run_ncu.sh](minst/run_ncu.sh): Use NCU test all diff dataset size for single GPU version, get FLOPs and DRAM
+- execute:
+  - [run_app.sh](mnist/run_app.sh): Test all diff dataset size for single & multi, get the running time
+  - [run_ncu.sh](mnist/run_ncu.sh): Use NCU test all diff dataset size for single GPU version, get FLOPs and DRAM
