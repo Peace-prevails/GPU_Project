@@ -18,10 +18,11 @@
 - execute: `./montecarlo n who`
   - n = number of iterations
   - who = 0: sequential version on CPU, 1: Single GPU version, 2: Multi-GPU version
- 
+
 **Pytorch-MNIST**
 - Host: cuda3.cims.nyu.edu
 - CUDA Version `module load cuda-11.8`
 - execute:
-  - [run_app.sh](mnist/run_app.sh): Test all diff dataset size for single & multi, get the running time
-  - [run_ncu.sh](mnist/run_ncu.sh): Use NCU test all diff dataset size for single GPU version, get FLOPs and DRAM
+  - [mnist/run_app.sh](mnist/run_app.sh): Test all diff dataset size for single & multi, get the running time
+  - [mnist/run_ncu.sh](mnist/run_ncu.sh): Use NCU test all diff dataset size for single GPU version, get FLOPs and DRAM
+  - Detail see [mnist/README.md](mnist/README.md)
