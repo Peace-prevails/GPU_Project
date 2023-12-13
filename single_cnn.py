@@ -9,20 +9,20 @@ import torch.cuda.profiler as profiler
 class ComplexCNN(nn.Module):
     def __init__(self):
         super(ComplexCNN, self).__init__()
-        # 第一层卷积
-        self.conv1 = nn.Conv2d(1, 32, kernel_size=3, stride=1, padding=1)  # 输入通道为1，输出通道为32
+
+        self.conv1 = nn.Conv2d(1, 32, kernel_size=3, stride=1, padding=1)  
         self.bn1 = nn.BatchNorm2d(32)
-        self.pool1 = nn.MaxPool2d(kernel_size=2, stride=2)  # 池化层
+        self.pool1 = nn.MaxPool2d(kernel_size=2, stride=2)  
 
-        # 第二层卷积
-        self.conv2 = nn.Conv2d(32, 64, kernel_size=3, stride=1, padding=1)  # 输入通道为32，输出通道为64
+  
+        self.conv2 = nn.Conv2d(32, 64, kernel_size=3, stride=1, padding=1) 
         self.bn2 = nn.BatchNorm2d(64)
-        self.pool2 = nn.MaxPool2d(kernel_size=2, stride=2)  # 池化层
+        self.pool2 = nn.MaxPool2d(kernel_size=2, stride=2) 
 
-        # 全连接层
-        self.fc1 = nn.Linear(64 * 7 * 7, 1024)  # 注意计算全连接层的输入维度
+
+        self.fc1 = nn.Linear(64 * 7 * 7, 1024)  
         self.dropout1 = nn.Dropout(0.5)
-        self.fc2 = nn.Linear(1024, 10)  # 输出层，10个类别
+        self.fc2 = nn.Linear(1024, 10)  
 
     def forward(self, x):
         x = F.relu(self.bn1(self.conv1(x)))
@@ -30,18 +30,18 @@ class ComplexCNN(nn.Module):
         x = F.relu(self.bn2(self.conv2(x)))
         x = self.pool2(x)
 
-        x = x.view(-1, 64 * 7 * 7)  # 展平层
+        x = x.view(-1, 64 * 7 * 7) 
         x = F.relu(self.fc1(x))
         x = self.dropout1(x)
-        x = self.fc2(x)  # 未使用激活函数，因为后面会使用交叉熵损失函数
+        x = self.fc2(x) 
         return x
 
-# 准备数据集
+
 transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))])
 train_dataset = datasets.MNIST(root='./data', train=True, download=True, transform=transform)
 train_loader = DataLoader(train_dataset, batch_size=256, shuffle=True)
 
-# 初始化网络和优化器
+
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 model = ComplexCNN().to(device)
 
@@ -49,10 +49,10 @@ criterion = nn.CrossEntropyLoss()
 optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
 print(f"Current device: {device}")
 
-# 训练过程
+
 def train(model, device, train_loader, optimizer, criterion, epochs=10):
     model.train()
-    start_time = time.time()  # 开始计时
+    start_time = time.time() 
 
     for epoch in range(epochs):
         for data, target in train_loader:
@@ -63,11 +63,11 @@ def train(model, device, train_loader, optimizer, criterion, epochs=10):
             loss.backward()
             optimizer.step()
 
-    end_time = time.time()  # 结束计时
+    end_time = time.time() 
     total_time = end_time - start_time
     print(f"Total training time: {total_time:.2f} seconds")
 
-# 开始训练
+
 profiler.start()
 train(model, device, train_loader, optimizer, criterion)
 profiler.stop()
