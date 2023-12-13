@@ -46,14 +46,30 @@ double monteCarloSingleGPU(long int n) {
     int threadsPerBlock = 256;
     int sharedMemSize = threadsPerBlock * sizeof(int); // Shared memory size per block
 
+    double time_malloc = 0, time_memcpy = 0, time_launch = 0, time_run = 0;
+    clock_t start, end;
 
     // Allocate host and device memory
     block_sums = (int *) malloc(blocks * sizeof(int));
+    start = clock();
     cudaMalloc(&d_block_sums, blocks * sizeof(int));
+    end = clock();
+    time_malloc = ((double)(end-start)) / CLOCKS_PER_SEC;
+
     // Launch kernel
+    start = clock();
     monteCarloKernel<<<blocks, threadsPerBlock, sharedMemSize>>>(d_block_sums, n, time(NULL));
+    end = clock();
+    time_launch = ((double)(end-start)) / CLOCKS_PER_SEC;
+
+    cudaDeviceSynchronize();
+    end = clock();
+    time_run = ((double)(end-start)) / CLOCKS_PER_SEC;
     // Copy result back to host
+    start = clock();
     cudaMemcpy(block_sums, d_block_sums, blocks * sizeof(int), cudaMemcpyDeviceToHost);
+    end = clock();
+    time_memcpy = ((double)(end-start)) / CLOCKS_PER_SEC;
     int total_count = 0;
     for (int i = 0; i < blocks; ++i) {
         total_count += block_sums[i];
@@ -62,6 +78,10 @@ double monteCarloSingleGPU(long int n) {
     cudaFree(d_block_sums);
     free(block_sums);
 
+    printf("cudaMalloc time = %lf secs\n", time_malloc); 
+    printf("cudaMemcpy time = %lf secs\n", time_memcpy); 
+    printf("kernel launch time = %lf secs\n", time_launch); 
+    printf("kernel run time = %lf secs\n", time_run); 
     // Calculate Pi
     return 4.0 * total_count / n;
 }

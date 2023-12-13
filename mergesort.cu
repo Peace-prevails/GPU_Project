@@ -37,23 +37,48 @@ void mergeSortSingleGPU(int* list, int len) {
     int blocks = 1024;
     int threadsPerBlock = 256;
 
+    double time_malloc = 0, time_memcpy = 0, time_launch = 0, time_run = 0;
+    clock_t start, end;
+
     // Allocate and copy device memory
+    start = clock();
     cudaMalloc(&d_list, len * sizeof(int));
     cudaMalloc(&d_temp, len * sizeof(int));
+    end = clock();
+    time_malloc += ((double)(end-start)) / CLOCKS_PER_SEC;
+
+    start = clock();
     cudaMemcpy(d_list, list, len * sizeof(int), cudaMemcpyHostToDevice);
+    end = clock();
+    time_memcpy += ((double)(end-start)) / CLOCKS_PER_SEC;
     // Launch kernel
+
     for (int width = 2; width < (len << 1); width <<= 1) {
+      start = clock();
       mergeSortKernel<<<blocks, threadsPerBlock>>>(d_list, d_temp, width, len);
+      end = clock();
+      time_launch += ((double)(end-start)) / CLOCKS_PER_SEC;
+
       cudaDeviceSynchronize();
+      end = clock();
+      time_run += ((double)(end-start)) / CLOCKS_PER_SEC;
+
       int* temp = d_list;
       d_list = d_temp;
       d_temp = temp;
     }
     // Copy result back to host
+    start = clock();
     cudaMemcpy(list, d_list, len * sizeof(int), cudaMemcpyDeviceToHost);
-     
+    end = clock();
+    time_memcpy += ((double)(end-start)) / CLOCKS_PER_SEC;
+
     cudaFree(d_list);
     cudaFree(d_temp);
+    printf("cudaMalloc time = %lf secs\n", time_malloc); 
+    printf("cudaMemcpy time = %lf secs\n", time_memcpy); 
+    printf("kernel launch time = %lf secs\n", time_launch); 
+    printf("kernel run time = %lf secs\n", time_run); 
 }
 
 void mergeSortMulGPU(int* list, int len) {
