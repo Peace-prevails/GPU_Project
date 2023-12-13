@@ -30,3 +30,21 @@ In this project, we measured multiple algorithms and models to obtain indicator 
   - [mnist/run_app.sh](mnist/run_app.sh): Test all diff dataset size for single & multi, get the running time
   - [mnist/run_ncu.sh](mnist/run_ncu.sh): Use NCU test all diff dataset size for single GPU version, get FLOPs and DRAM
   - Detail see [mnist/README.md](mnist/README.md)
+
+
+4. **knn_single_gpu.cu**
+- Host: cuda3.cims.nyu.edu
+- CUDA Version: `module load cuda-11.4`
+- compile: `nvcc -o knn_single knn_single_gpu.cu`
+- execute: `./knn_single`
+
+5. **knn_dual_gpu.cu**
+- Host: cuda3.cims.nyu.edu
+- CUDA Version: `module load cuda-11.4`
+- compile: `nvcc -o knn_dual knn_dual_gpu.cu`
+- execute: `./knn_dual`
+
+6. **single_cnn.py**
+- Host: cuda3.cims.nyu.edu
+- CUDA Version: `module load cuda-11.4`
+- execute: `python3 single_cnn.py`
