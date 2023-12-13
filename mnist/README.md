@@ -18,6 +18,8 @@ Single GPU and multiple GPUs were used to test performance data.
 
 * [run_ncu.sh](run_ncu.sh): Use NCU test all diff dataset size for single GPU version, get FLOPs and DRAM
 
+* [run_outputs](run_outputs): The APP outputs and NCU outputs
+
 
 
 
