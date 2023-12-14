@@ -54,3 +54,12 @@ In this project, we measured multiple algorithms and models to obtain indicator 
 - Host: cuda4.cims.nyu.edu
 - CUDA Version: `module load cuda-11.4`
 - execute: `python3 -m torch.distributed.launch --nproc_per_node=2 --master_port 29501 mul_cnn.py`
+8. **nbody.cu**
+- Host: cuda3.cims.nyu.edu
+- CUDA Version: `module load cuda-11.8`
+- execute: `./nbody 10000 1`
+9. **reduce.cu**
+- Host: cuda3.cims.nyu.edu
+- CUDA Version: `module load cuda-11.8`
+- execute: ./reduce 10000 1`
+
