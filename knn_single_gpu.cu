@@ -7,7 +7,7 @@
 #include <float.h>
 
 #define NUM_FEATURES 4
-#define MAX_DATA_SIZE 30001
+#define MAX_DATA_SIZE 60001
 #define NUM_CLASSES 3
 #define TRAIN_TEST_SPLIT 0.8
 double train_features[MAX_DATA_SIZE * NUM_FEATURES];
@@ -118,9 +118,9 @@ int majorityVote(double *distances, int *train_labels, int train_size, int idx, 
 }
 
 
-int main() {
+int main(int argc, char *argv[]) {
     // Load data into flat arrays
-    int total_size = loadData("synthetic_knn_dataset.csv", train_features, train_labels);
+    int total_size = loadData(argv[1], train_features, train_labels);
     if (total_size == -1) return 1;
     
     // printf("First 5 samples of train_features:\n");
@@ -165,12 +165,14 @@ int main() {
     dim3 blockSize(128);
     dim3 gridSize((test_size + blockSize.x - 1) / blockSize.x);
     computeDistances<<<gridSize, blockSize>>>(d_train_features, d_test_features, d_distances, train_size, test_size);
-    end = clock();
+    // end = clock();
+    // time_taken1 = ((double)(end - start))/ CLOCKS_PER_SEC;
     cudaDeviceSynchronize();
-    time_taken1 = ((double)(end - start))/ CLOCKS_PER_SEC;
+    // end = clock();
+    // time_taken1 = ((double)(end - start))/ CLOCKS_PER_SEC;
     // Allocate memory on host for the distances and copy from device to host
     double *h_distances = (double*)malloc(train_size * test_size * sizeof(double));
-    start = clock();
+    // start = clock();
     cudaMemcpy(h_distances, d_distances, train_size * test_size * sizeof(double), cudaMemcpyDeviceToHost);
     end = clock();
     time_taken2 = ((double)(end - start))/ CLOCKS_PER_SEC;
@@ -178,7 +180,7 @@ int main() {
     // Here is the logic for the k nearest neighbors and majority voting
     double best_accuracy = 0.0;
     int best_k = 1;
-    start=clock();
+    // start=clock();
     // 尝试不同的k值
     for (int k = 1; k <= 5; k++) {
         int correct_predictions = 0;
@@ -200,12 +202,11 @@ int main() {
             best_k = k;
         }
     }
-   end=clock();
-   time_taken3 = ((double)(end - start))/ CLOCKS_PER_SEC;
-   printf("Time taken for copying data to device,launch kernels: %lf\n", time_taken1);
-   printf("Time taken for copying data back to the host: %lf\n", time_taken2);
-   printf("Total overhead: %lf\n", time_taken1+time_taken2);
-   printf("Total time: %lf\n", time_taken1+time_taken2+time_taken3);
+   
+   printf("Time taken for total: %lf\n", time_taken2);
+//    printf("Time taken for copying data back to the host: %lf\n", time_taken2);
+//    printf("Total overhead: %lf\n", time_taken1+time_taken2);
+//    printf("Total time: %lf\n", time_taken1+time_taken2+time_taken3);
    printf("Best k value: %d with accuracy: %f\n", best_k, best_accuracy);
 
 
