@@ -50,7 +50,7 @@ In this project, we measured multiple algorithms and models to obtain indicator 
 - execute: `python3 single_cnn.py`
 
 
-7.**mul_cnn.py**
+7. **mul_cnn.py**
 - Host: cuda4.cims.nyu.edu
 - CUDA Version: `module load cuda-11.4`
 - execute: `python3 -m torch.distributed.launch --nproc_per_node=2 --master_port 29501 mul_cnn.py`
@@ -63,3 +63,5 @@ In this project, we measured multiple algorithms and models to obtain indicator 
 - CUDA Version: `module load cuda-11.8`
 - execute: ./reduce 10000 1`
 
+10. **GPU Final Project.ipynb**
+- This jupyter notebook file includes how we prepared the data and trained the model.
