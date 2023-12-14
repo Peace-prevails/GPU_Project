@@ -7,7 +7,7 @@
 #include <float.h>
 
 #define NUM_FEATURES 4
-#define MAX_DATA_SIZE 30001
+#define MAX_DATA_SIZE 60001
 #define NUM_CLASSES 3
 #define TRAIN_TEST_SPLIT 0.8
 double train_features[MAX_DATA_SIZE * NUM_FEATURES];
@@ -107,9 +107,9 @@ __global__ void computeDistances(double *train_features, double *test_features, 
     }
 }
 
-int main() {
+int main(int argc, char *argv[]) {
     // Load data into flat arrays
-    int total_size = loadData("synthetic_knn_dataset.csv", train_features, train_labels);
+    int total_size = loadData(argv[1], train_features, train_labels);
     if (total_size == -1) return 1;
 
     int train_size = (int)(total_size * TRAIN_TEST_SPLIT);
@@ -221,14 +221,14 @@ int main() {
 
 //     // 等待GPU 0完成计算
     cudaSetDevice(0);
-    end = clock();
-    time_taken1 = ((double)(end - start))/ CLOCKS_PER_SEC;
+    // end = clock();
+    // time_taken1 = ((double)(end - start))/ CLOCKS_PER_SEC;
     cudaDeviceSynchronize();
 
 //     // 等待GPU 1完成计算
     cudaSetDevice(1);
     cudaDeviceSynchronize();
-    start = clock();
+    // start = clock();
     // 从两个GPU拷贝结果回CPU
     cudaMemcpy(full_distances, d_distances_0, train_size * half_test_size * sizeof(double), cudaMemcpyDeviceToHost);
     cudaMemcpy(full_distances + second_half_start_idx, d_distances_1, train_size * (test_size - half_test_size) * sizeof(double), cudaMemcpyDeviceToHost);
@@ -262,10 +262,10 @@ int main() {
     }
     end=clock();
     time_taken3 = ((double)(end - start))/ CLOCKS_PER_SEC;
-    printf("Time taken for d to h: %lf\n", time_taken1);
-    printf("Time taken for h-d: %lf\n", time_taken2);
-    printf("Total time taken overhead: %lf\n", time_taken1+time_taken2); 
-    printf("Total time taken: %lf\n", time_taken1+time_taken2+time_taken3); 
+    // printf("Time taken for d to h: %lf\n", time_taken1);
+    printf("Time taken for kernel: %lf\n", time_taken2);
+    // printf("Total time taken overhead: %lf\n", time_taken1+time_taken2); 
+    // printf("Total time taken: %lf\n", time_taken1+time_taken2+time_taken3); 
     printf("Best k value: %d with accuracy: %f\n", best_k, best_accuracy);
         // 释放内存
     cudaFree(d_train_features_0);
