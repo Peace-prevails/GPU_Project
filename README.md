@@ -27,6 +27,8 @@ In this project, we measured multiple algorithms and models to obtain indicator 
 - Host: cuda3.cims.nyu.edu
 - CUDA Version `module load cuda-11.8`
 - execute:
+  - `cd mnist`
+  - create a env with Python=3.11 and install pytorch with `conda install pytorch==2.1.0 torchvision==0.16.0 pytorch-cuda=11.8 -c pytorch -c nvidia`
   - [mnist/run_app.sh](mnist/run_app.sh): Test all diff dataset size for single & multi, get the running time
   - [mnist/run_ncu.sh](mnist/run_ncu.sh): Use NCU test all diff dataset size for single GPU version, get FLOPs and DRAM
   - Detail see [mnist/README.md](mnist/README.md)

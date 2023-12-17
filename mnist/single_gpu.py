@@ -101,7 +101,7 @@ def load_train_objs(dataset_size=2048, batch_size=32, use_cuda=True, use_mps=Fal
 def main(device, total_epochs, save_every, dataset_size, batch_size):
     train_data, model, optimizer = load_train_objs(dataset_size=dataset_size, batch_size=batch_size)
     trainer = Trainer(model, train_data, optimizer, device, save_every)
-    
+
     start_train_time = time.time()
     trainer.train(total_epochs)
     end_train_time = time.time()
@@ -121,6 +121,6 @@ if __name__ == "__main__":
     parser.add_argument('--gamma', type=float, default=0.7, metavar='M',
                         help='Learning rate step gamma (default: 0.7)')
     args = parser.parse_args()
-    
+
     device = 0  # shorthand for cuda:0
     main(device, args.total_epochs, args.save_every, args.dataset_size, args.batch_size)
