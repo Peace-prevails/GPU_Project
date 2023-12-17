@@ -40,13 +40,13 @@ In this project, we measured multiple algorithms and models to obtain indicator 
 - Host: cuda3.cims.nyu.edu
 - CUDA Version: `module load cuda-11.4`
 - compile: `nvcc -o knn_single knn_single_gpu.cu`
-- execute: `./knn_single`
+- execute: `./knn_single synthetic_knn_dataset.csv `
 
 5. **knn_dual_gpu.cu**
 - Host: cuda3.cims.nyu.edu
 - CUDA Version: `module load cuda-11.4`
 - compile: `nvcc -o knn_dual knn_dual_gpu.cu`
-- execute: `./knn_dual`
+- execute: `./knn_dual synthetic_knn_dataset.csv`
 
 6. **single_cnn.py**
 - Host: cuda3.cims.nyu.edu
@@ -57,7 +57,7 @@ In this project, we measured multiple algorithms and models to obtain indicator 
 7. **mul_cnn.py**
 - Host: cuda4.cims.nyu.edu
 - CUDA Version: `module load cuda-11.4`
-- execute: `python3 -m torch.distributed.launch --nproc_per_node=2 --master_port 29501 mul_cnn.py`
+- execute: `python3 -m torch.distributed.launch mul_cnn.py`
 
 8. **nbody.cu**
 - Host: cuda3.cims.nyu.edu
