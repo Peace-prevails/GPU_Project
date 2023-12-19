@@ -62,12 +62,16 @@ In this project, we measured multiple algorithms and models to obtain indicator 
 8. **nbody.cu**
 - Host: cuda3.cims.nyu.edu
 - CUDA Version: `module load cuda-11.8`
+- compile: nvcc -o nbody nbody.cu
 - execute: `./nbody 10000 1`
+- N represents the size of the data, and type indicates the execution mode (1 for single GPU, 2 for multi-GPU).
 
 9. **reduce.cu**
 - Host: cuda3.cims.nyu.edu
+- CUDA Version: ` nvcc -o reduce reduce.cu`
 - CUDA Version: `module load cuda-11.8`
 - execute: ./reduce 10000 1`
+- N represents the size of the data, and type indicates the execution mode (1 for single GPU, 2 for multi-GPU).
 
 10. **GPU Final Project.ipynb**
 - This jupyter notebook file includes how we prepared the data and trained the model.
